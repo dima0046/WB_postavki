@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            label1 = new Label();
+            btnopen = new Button();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -40,7 +40,7 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(label1, 1, 1);
+            tableLayoutPanel1.Controls.Add(btnopen, 1, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -52,14 +52,15 @@
             tableLayoutPanel1.Size = new Size(800, 577);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
+            // btnopen
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(203, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(116, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Перетащите объект";
+            btnopen.Location = new Point(203, 43);
+            btnopen.Name = "btnopen";
+            btnopen.Size = new Size(75, 23);
+            btnopen.TabIndex = 0;
+            btnopen.Text = "Открыть";
+            btnopen.UseVisualStyleBackColor = true;
+            btnopen.Click += btnopen_Click;
             // 
             // FormMain
             // 
@@ -68,9 +69,8 @@
             ClientSize = new Size(800, 577);
             Controls.Add(tableLayoutPanel1);
             Name = "FormMain";
-            Text = "Form1";
+            Text = "WB поставки";
             tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -78,6 +78,6 @@
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
-        private Label label1;
+        private Button btnopen;
     }
 }

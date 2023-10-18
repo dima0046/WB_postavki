@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DataSet1" msprop:Generator_DataSetName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTablePodsorti" msprop:Generator_RowEvHandlerName="DataTablePodsortiRowChangeEventHandler" msprop:Generator_RowDeletedName="DataTablePodsortiRowDeleted" msprop:Generator_RowDeletingName="DataTablePodsortiRowDeleting" msprop:Generator_RowEvArgName="DataTablePodsortiRowChangeEvent" msprop:Generator_TablePropName="DataTablePodsorti" msprop:Generator_RowChangedName="DataTablePodsortiRowChanged" msprop:Generator_RowChangingName="DataTablePodsortiRowChanging" msprop:Generator_TableClassName="DataTablePodsortiDataTable" msprop:Generator_RowClassName="DataTablePodsortiRow" msprop:Generator_TableVarName="tableDataTablePodsorti" msprop:Generator_UserTableName="DataTablePodsorti">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_UserColumnName="id" type="xs:string" minOccurs="0" />
+              <xs:element name="brand" msprop:Generator_ColumnPropNameInRow="brand" msprop:Generator_ColumnPropNameInTable="brandColumn" msprop:Generator_ColumnVarNameInTable="columnbrand" msprop:Generator_UserColumnName="brand" type="xs:string" minOccurs="0" />
+              <xs:element name="articulSeller" msprop:Generator_ColumnPropNameInRow="articulSeller" msprop:Generator_ColumnPropNameInTable="articulSellerColumn" msprop:Generator_ColumnVarNameInTable="columnarticulSeller" msprop:Generator_UserColumnName="articulSeller" type="xs:string" minOccurs="0" />
+              <xs:element name="articulWB" msprop:Generator_ColumnPropNameInRow="articulWB" msprop:Generator_ColumnPropNameInTable="articulWBColumn" msprop:Generator_ColumnVarNameInTable="columnarticulWB" msprop:Generator_UserColumnName="articulWB" type="xs:string" minOccurs="0" />
+              <xs:element name="barcode" msprop:Generator_ColumnPropNameInRow="barcode" msprop:Generator_ColumnPropNameInTable="barcodeColumn" msprop:Generator_ColumnVarNameInTable="columnbarcode" msprop:Generator_UserColumnName="barcode" type="xs:string" minOccurs="0" />
+              <xs:element name="itemsLeftCount" msprop:Generator_ColumnPropNameInRow="itemsLeftCount" msprop:Generator_ColumnPropNameInTable="itemsLeftCountColumn" msprop:Generator_ColumnVarNameInTable="columnitemsLeftCount" msprop:Generator_UserColumnName="itemsLeftCount" type="xs:string" minOccurs="0" />
+              <xs:element name="newCount" msprop:Generator_ColumnPropNameInRow="newCount" msprop:Generator_ColumnPropNameInTable="newCountColumn" msprop:Generator_ColumnVarNameInTable="columnnewCount" msprop:Generator_UserColumnName="newCount" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

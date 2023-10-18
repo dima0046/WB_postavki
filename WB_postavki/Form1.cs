@@ -29,8 +29,8 @@ namespace WB_postavki
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
             openFileDialog.FilterIndex = 2;
             openFileDialog.RestoreDirectory = true;
 
@@ -57,9 +57,11 @@ namespace WB_postavki
                     worksheet.DeleteRow(1);
                     worksheet.DeleteRow(1);
 
+                    // Получение всех данных из листа Excel
                     var totalData = worksheet.Cells["A1:Q" + worksheet.Dimension.End.Row].Value;
                     List<object[]> dataRows = new List<object[]>();
 
+                    // Итерация по всем строкам и добавление данных в список
                     for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
                     {
                         object[] rowData = new object[5]; // Учитывайте, что здесь 5 - количество нужных столбцов
@@ -71,6 +73,7 @@ namespace WB_postavki
                         dataRows.Add(rowData);
                     }
 
+                    // Группировка данных по столбцу "Артикул WB"
                     var result = dataRows.GroupBy(row => row[2]?.ToString().Trim().ToUpper())
                                          .Select(g => new
                                          {
@@ -78,14 +81,20 @@ namespace WB_postavki
                                              Rows = g.ToList()
                                          });
 
+                    // Создание DataTable для отображения в DataGridView
                     DataTable dt = new DataTable();
 
+                    // Добавление столбцов в DataTable
                     dt.Columns.Add("Бренд", typeof(string));
                     dt.Columns.Add("Артикул продавца", typeof(string));
                     dt.Columns.Add("Артикул WB", typeof(string));
                     dt.Columns.Add("Баркод", typeof(string));
                     dt.Columns.Add("Текущий остаток", typeof(int));
 
+
+                    DataSet1.Tables["Table1"].Rows.Add(row.ItemArray);
+
+                    // Итерация по результатам группировки и суммирование остатков
                     foreach (var group in result)
                     {
                         int sum = 0;
@@ -93,10 +102,23 @@ namespace WB_postavki
                         {
                             sum += int.TryParse(row[4]?.ToString(), out int quantity) ? quantity : 0;
                         }
+                        // Добавление строки с результатами в DataTable
                         dt.Rows.Add(group.Rows[0][0], group.Rows[0][1], group.ArticulWB, group.Rows[0][3], sum);
                     }
 
-                    dataGridView1.DataSource = dt;
+
+
+                    // Создание BindingSource
+                    BindingSource bindingSourcePodsorti = new BindingSource();
+
+                    // Привязка DataTable к BindingSource
+                    bindingSourcePodsorti.DataSource = dt;
+
+                    // Привязка BindingSource к DataGridView
+                    dataGridView1.DataSource = bindingSourcePodsorti;
+
+
+
                     #region 3333
                     /*
                     // Получаем все значения из заданного диапазона ячеек
@@ -257,8 +279,9 @@ namespace WB_postavki
             }
         }
 
+        private void bindingSourcePodsorti_CurrentChanged(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }

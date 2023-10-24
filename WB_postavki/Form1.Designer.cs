@@ -67,7 +67,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(800, 577);
+            tableLayoutPanel1.Size = new Size(1217, 609);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // btnopen
@@ -88,7 +88,7 @@
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(580, 525);
+            dataGridView1.Size = new Size(997, 557);
             dataGridView1.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -104,7 +104,7 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(200, 525);
+            tableLayoutPanel2.Size = new Size(200, 557);
             tableLayoutPanel2.TabIndex = 3;
             // 
             // panel1
@@ -148,7 +148,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 577);
+            ClientSize = new Size(1217, 609);
             Controls.Add(tableLayoutPanel1);
             MinimumSize = new Size(816, 616);
             Name = "FormMain";

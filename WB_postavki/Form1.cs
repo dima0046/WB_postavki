@@ -1,31 +1,34 @@
 using System;
 using System.IO;
 using OfficeOpenXml;
-using System.Linq;
-using static OfficeOpenXml.ExcelErrorValue;
+using Microsoft.Office.Interop.Excel;
 using System.Data;
 using System.Data.OleDb;
-using System.Threading.Tasks.Dataflow;
-using System.Text.RegularExpressions;
+using System.Windows.Forms;
+
 
 namespace WB_postavki
 {
     public partial class FormMain : Form
     {
+        public System.Data.DataTable grT = new System.Data.DataTable();
         public FormMain()
         {
             InitializeComponent();
         }
 
+        //Открыть документ Excel
         private void btnopen_Click(object sender, EventArgs e)
         {
-            //loadfile();
-            loadFIleIntoDataSet();
-
+            loadFIleIntoDataSet();   
         }
 
+        private void buttonSavePodsorti_Click(object sender, EventArgs e)
+        {
+            SaveExcel();
+        }
 
-        //Загрузка Excel файла. Вариант 1. Без БД
+        #region Загрузка Excel файла. Вариант 1. Без БД
         private void loadfile()
         {
             string sourceFilePath;
@@ -90,7 +93,7 @@ namespace WB_postavki
                                          });
 
                     // Создание DataTable для отображения в DataGridView
-                    DataTable dt = new DataTable();
+                    System.Data.DataTable dt = new System.Data.DataTable();
 
                     // Добавление столбцов в DataTable
                     dt.Columns.Add("Бренд", typeof(string));
@@ -124,20 +127,20 @@ namespace WB_postavki
                 }
             }
         }
-
+        #endregion
 
         private void loadFIleIntoDataSet()
         {
-            string sourceFilePath;
-            string destinationFilePath;
+        string sourceFilePath;
+        string destinationFilePath;
 
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+        OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
-            openFileDialog.FilterIndex = 2;
-            openFileDialog.RestoreDirectory = true;
+        openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+        openFileDialog.FilterIndex = 2;
+        openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -149,25 +152,25 @@ namespace WB_postavki
                 FileInfo sourceFileInfo = new FileInfo(sourceFilePath);
                 FileInfo destinationFileInfo = new FileInfo(destinationFilePath);
 
-
+                //Загружаем Excel
                 string connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={sourceFilePath};Extended Properties='Excel 12.0;HDR=Yes;IMEX=1'";
-                // Устанавливаем контекст лицензирования как некоммерческий
 
                 using (OleDbConnection connection = new OleDbConnection(connectionString))
                 {
                     connection.Open();
-                    //string sqlQuery = "SELECT * FROM [Sheet1$A2:Q]";
                     string sqlQuery = "SELECT [Бренд], [Артикул продавца], [Артикул WB], [Баркод], [Текущий остаток, шт#] FROM [Sheet1$A2:Q]";
 
                     using (OleDbCommand command = new OleDbCommand(sqlQuery, connection))
                     {
+                        // Создаем адаптер данных OleDbDataAdapter для заполнения DataTable и источника данных DataGridView
                         using (OleDbDataAdapter dataAdapter = new OleDbDataAdapter(command))
                         {
-                            DataTable dt = new DataTable();
+                            System.Data.DataTable dt = new System.Data.DataTable();
                             dataAdapter.Fill(dt);
                             dataGridView1.DataSource = dt;
                         }
 
+                        // Преобразование данных в объекты groupData, а затем группировка по значению ArtWB и вычисление суммарного значения TotalCount
                         var grData = dataGridView1.Rows.Cast<DataGridViewRow>()
                             .Where(row => !row.IsNewRow)
                             .Select(row => new groupData
@@ -190,7 +193,8 @@ namespace WB_postavki
                             })
                             .ToList();
 
-                        DataTable grT = new DataTable();
+                        // Создание новой DataTable и заполнение ее данными из сгруппированных данных
+                        //System.Data.DataTable grT = new System.Data.DataTable();
                         grT.Columns.Add("Бренд");
                         grT.Columns.Add("Артикул продавца");
                         grT.Columns.Add("Артикул WB");
@@ -198,6 +202,8 @@ namespace WB_postavki
                         grT.Columns.Add("Текущий остаток, шт.");
                         grT.Columns.Add("Новое количество");
 
+
+                        // Заполнение новой таблицы данными из сгруппированных данных
                         foreach (var group in grData)
                         {
                             grT.Rows.Add(group.Brand, group.ArtSeller, group.ArtWB, group.Barcode, group.TotalCount, "");
@@ -206,10 +212,54 @@ namespace WB_postavki
                         dataGridView1.DataSource = grT;
                     }
                 }
+            }
 
+        }
+
+        private void SaveExcel()
+        {
+            System.Data.DataTable dataTable = grT; // Получите свой DataTable здесь
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            // Создаем объект OpenFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filepath = saveFileDialog.FileName;
+                FileInfo file = new FileInfo(filepath); // Замените на свой путь и имя файла
+                                                        
+                
+
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    ExcelWorksheet ws = package.Workbook.Worksheets.Add("Новый лист");
+
+                    // Добавляем наименования столбцов
+                    // Добавляем наименования столбцов
+                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    {
+                        ws.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
+                    }
+
+                    // Записываем данные из DataTable в ячейки Excel
+                    for (int i = 0; i < dataTable.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataTable.Columns.Count; j++)
+                        {
+                            ws.Cells[i + 1, j + 1].Value = dataTable.Rows[i][j];
+                        }
+                    }
+
+                    package.Save();
+                }
             }
         }
 
+    }
         public class groupData
         {
             public string Brand { get; set; }
@@ -217,14 +267,9 @@ namespace WB_postavki
             public long ArtWB { get; set; }
             public long Barcode { get; set; }
             public int TotalCount { get; set; }
-
             public int NewCount { get; set; }
         }
 
 
-        private void bindingSourcePodsorti_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-    }
+    
 }

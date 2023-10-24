@@ -39,6 +39,8 @@
             pictureBoxTables1 = new PictureBox();
             bindingSourcePodsorti = new BindingSource(components);
             bindingSourceFullTable = new BindingSource(components);
+            tableLayoutPanel3 = new TableLayoutPanel();
+            buttonSavePodsorti = new Button();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tableLayoutPanel2.SuspendLayout();
@@ -46,6 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxTables1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).BeginInit();
+            tableLayoutPanel3.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -55,9 +58,10 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(btnopen, 1, 0);
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Controls.Add(dataGridView1, 1, 1);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(0);
@@ -66,15 +70,16 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new Size(1217, 609);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // btnopen
             // 
-            btnopen.Location = new Point(203, 3);
+            btnopen.Dock = DockStyle.Fill;
+            btnopen.FlatStyle = FlatStyle.System;
+            btnopen.Location = new Point(3, 3);
             btnopen.Name = "btnopen";
-            btnopen.Size = new Size(75, 23);
+            btnopen.Size = new Size(113, 26);
             btnopen.TabIndex = 0;
             btnopen.Text = "Открыть";
             btnopen.UseVisualStyleBackColor = true;
@@ -140,9 +145,35 @@
             pictureBoxTables1.TabIndex = 0;
             pictureBoxTables1.TabStop = false;
             // 
-            // bindingSourcePodsorti
+            // tableLayoutPanel3
             // 
-            bindingSourcePodsorti.CurrentChanged += bindingSourcePodsorti_CurrentChanged;
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 119F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 175F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Controls.Add(buttonSavePodsorti, 1, 0);
+            tableLayoutPanel3.Controls.Add(btnopen, 0, 0);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(200, 0);
+            tableLayoutPanel3.Margin = new Padding(0);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel3.Size = new Size(997, 32);
+            tableLayoutPanel3.TabIndex = 4;
+            // 
+            // buttonSavePodsorti
+            // 
+            buttonSavePodsorti.Dock = DockStyle.Fill;
+            buttonSavePodsorti.FlatStyle = FlatStyle.System;
+            buttonSavePodsorti.Location = new Point(122, 3);
+            buttonSavePodsorti.Name = "buttonSavePodsorti";
+            buttonSavePodsorti.Size = new Size(169, 26);
+            buttonSavePodsorti.TabIndex = 1;
+            buttonSavePodsorti.Text = "Сохранить подсорты";
+            buttonSavePodsorti.UseVisualStyleBackColor = true;
+            buttonSavePodsorti.Click += buttonSavePodsorti_Click;
             // 
             // FormMain
             // 
@@ -161,6 +192,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxTables1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).EndInit();
+            tableLayoutPanel3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -176,5 +208,7 @@
         private Label labelTables1;
         private BindingSource bindingSourcePodsorti;
         private BindingSource bindingSourceFullTable;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Button buttonSavePodsorti;
     }
 }

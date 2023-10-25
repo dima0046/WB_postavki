@@ -30,144 +30,47 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnopen = new Button();
             dataGridView1 = new DataGridView();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            panel1 = new Panel();
-            labelTables1 = new Label();
-            pictureBoxTables1 = new PictureBox();
+            buttonSavePodsorti = new Button();
+            btnopen = new Button();
             bindingSourcePodsorti = new BindingSource(components);
             bindingSourceFullTable = new BindingSource(components);
-            tableLayoutPanel3 = new TableLayoutPanel();
-            buttonSavePodsorti = new Button();
-            tableLayoutPanel1.SuspendLayout();
+            panel2 = new Panel();
+            nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
+            label1 = new Label();
+            panel1 = new Panel();
+            btmHam = new PictureBox();
+            sidebar = new FlowLayoutPanel();
+            buttonPodsortiTab = new Button();
+            panel3 = new Panel();
+            buttonKoroba = new Button();
+            panel4 = new Panel();
+            button2 = new Button();
+            SidebarTransition = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            tableLayoutPanel2.SuspendLayout();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxTables1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).BeginInit();
-            tableLayoutPanel3.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btmHam).BeginInit();
+            sidebar.SuspendLayout();
+            panel3.SuspendLayout();
+            panel4.SuspendLayout();
             SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.AutoSize = true;
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(dataGridView1, 1, 1);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(1217, 609);
-            tableLayoutPanel1.TabIndex = 0;
-            // 
-            // btnopen
-            // 
-            btnopen.Dock = DockStyle.Fill;
-            btnopen.FlatStyle = FlatStyle.System;
-            btnopen.Location = new Point(3, 3);
-            btnopen.Name = "btnopen";
-            btnopen.Size = new Size(113, 26);
-            btnopen.TabIndex = 0;
-            btnopen.Text = "Открыть";
-            btnopen.UseVisualStyleBackColor = true;
-            btnopen.Click += btnopen_Click;
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(200, 32);
+            dataGridView1.Location = new Point(947, 156);
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(997, 557);
+            dataGridView1.Size = new Size(291, 486);
             dataGridView1.TabIndex = 1;
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.ColumnCount = 1;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Controls.Add(panel1, 0, 0);
-            tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 32);
-            tableLayoutPanel2.Margin = new Padding(0);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 3;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(200, 557);
-            tableLayoutPanel2.TabIndex = 3;
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(labelTables1);
-            panel1.Controls.Add(pictureBoxTables1);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 3);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(194, 49);
-            panel1.TabIndex = 2;
-            // 
-            // labelTables1
-            // 
-            labelTables1.AutoSize = true;
-            labelTables1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            labelTables1.Location = new Point(40, 8);
-            labelTables1.Margin = new Padding(0);
-            labelTables1.Name = "labelTables1";
-            labelTables1.Size = new Size(124, 32);
-            labelTables1.TabIndex = 1;
-            labelTables1.Text = "Подсорты";
-            // 
-            // pictureBoxTables1
-            // 
-            pictureBoxTables1.Dock = DockStyle.Left;
-            pictureBoxTables1.Image = (Image)resources.GetObject("pictureBoxTables1.Image");
-            pictureBoxTables1.Location = new Point(0, 0);
-            pictureBoxTables1.Name = "pictureBoxTables1";
-            pictureBoxTables1.Size = new Size(30, 49);
-            pictureBoxTables1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBoxTables1.TabIndex = 0;
-            pictureBoxTables1.TabStop = false;
-            // 
-            // tableLayoutPanel3
-            // 
-            tableLayoutPanel3.ColumnCount = 3;
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 119F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 175F));
-            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Controls.Add(buttonSavePodsorti, 1, 0);
-            tableLayoutPanel3.Controls.Add(btnopen, 0, 0);
-            tableLayoutPanel3.Dock = DockStyle.Fill;
-            tableLayoutPanel3.Location = new Point(200, 0);
-            tableLayoutPanel3.Margin = new Padding(0);
-            tableLayoutPanel3.Name = "tableLayoutPanel3";
-            tableLayoutPanel3.RowCount = 1;
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(997, 32);
-            tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonSavePodsorti
             // 
-            buttonSavePodsorti.Dock = DockStyle.Fill;
             buttonSavePodsorti.FlatStyle = FlatStyle.System;
-            buttonSavePodsorti.Location = new Point(122, 3);
+            buttonSavePodsorti.Location = new Point(753, 156);
             buttonSavePodsorti.Name = "buttonSavePodsorti";
             buttonSavePodsorti.Size = new Size(169, 26);
             buttonSavePodsorti.TabIndex = 1;
@@ -175,40 +78,224 @@
             buttonSavePodsorti.UseVisualStyleBackColor = true;
             buttonSavePodsorti.Click += buttonSavePodsorti_Click;
             // 
+            // btnopen
+            // 
+            btnopen.FlatStyle = FlatStyle.System;
+            btnopen.Location = new Point(597, 156);
+            btnopen.Name = "btnopen";
+            btnopen.Size = new Size(113, 26);
+            btnopen.TabIndex = 0;
+            btnopen.Text = "Открыть";
+            btnopen.UseVisualStyleBackColor = true;
+            btnopen.Click += btnopen_Click;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.Controls.Add(nightControlBox1);
+            panel2.Controls.Add(label1);
+            panel2.Controls.Add(panel1);
+            panel2.Controls.Add(btmHam);
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(1217, 44);
+            panel2.TabIndex = 1;
+            // 
+            // nightControlBox1
+            // 
+            nightControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            nightControlBox1.BackColor = Color.Transparent;
+            nightControlBox1.CloseHoverColor = Color.FromArgb(199, 80, 80);
+            nightControlBox1.CloseHoverForeColor = Color.White;
+            nightControlBox1.DefaultLocation = true;
+            nightControlBox1.DisableMaximizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox1.DisableMinimizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox1.EnableCloseColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.EnableMaximizeButton = true;
+            nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.EnableMinimizeButton = true;
+            nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.Location = new Point(1078, 0);
+            nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox1.MaximizeHoverForeColor = Color.White;
+            nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox1.MinimizeHoverForeColor = Color.White;
+            nightControlBox1.Name = "nightControlBox1";
+            nightControlBox1.Size = new Size(139, 31);
+            nightControlBox1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(57, 7);
+            label1.Name = "label1";
+            label1.Size = new Size(128, 30);
+            label1.TabIndex = 2;
+            label1.Text = "WB Asistent";
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(23, 24, 29);
+            panel1.Location = new Point(0, 44);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(185, 56);
+            panel1.TabIndex = 4;
+            // 
+            // btmHam
+            // 
+            btmHam.Dock = DockStyle.Left;
+            btmHam.Image = (Image)resources.GetObject("btmHam.Image");
+            btmHam.Location = new Point(0, 0);
+            btmHam.Name = "btmHam";
+            btmHam.Size = new Size(40, 44);
+            btmHam.SizeMode = PictureBoxSizeMode.CenterImage;
+            btmHam.TabIndex = 1;
+            btmHam.TabStop = false;
+            btmHam.Click += btmHam_Click;
+            // 
+            // sidebar
+            // 
+            sidebar.BackColor = Color.FromArgb(23, 24, 29);
+            sidebar.Controls.Add(buttonPodsortiTab);
+            sidebar.Controls.Add(panel3);
+            sidebar.Controls.Add(panel4);
+            sidebar.Dock = DockStyle.Left;
+            sidebar.Location = new Point(0, 44);
+            sidebar.Margin = new Padding(0);
+            sidebar.Name = "sidebar";
+            sidebar.Size = new Size(185, 572);
+            sidebar.TabIndex = 2;
+            // 
+            // buttonPodsortiTab
+            // 
+            buttonPodsortiTab.BackColor = Color.FromArgb(23, 24, 29);
+            buttonPodsortiTab.CausesValidation = false;
+            buttonPodsortiTab.FlatAppearance.BorderSize = 0;
+            buttonPodsortiTab.FlatStyle = FlatStyle.Flat;
+            buttonPodsortiTab.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPodsortiTab.ForeColor = SystemColors.Window;
+            buttonPodsortiTab.Image = (Image)resources.GetObject("buttonPodsortiTab.Image");
+            buttonPodsortiTab.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonPodsortiTab.Location = new Point(0, 0);
+            buttonPodsortiTab.Margin = new Padding(0);
+            buttonPodsortiTab.Name = "buttonPodsortiTab";
+            buttonPodsortiTab.Size = new Size(185, 52);
+            buttonPodsortiTab.TabIndex = 3;
+            buttonPodsortiTab.Text = "         Подсорты";
+            buttonPodsortiTab.TextAlign = ContentAlignment.MiddleLeft;
+            buttonPodsortiTab.UseVisualStyleBackColor = false;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.FromArgb(23, 24, 29);
+            panel3.Controls.Add(buttonKoroba);
+            panel3.Location = new Point(0, 52);
+            panel3.Margin = new Padding(0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(185, 56);
+            panel3.TabIndex = 4;
+            // 
+            // buttonKoroba
+            // 
+            buttonKoroba.BackColor = Color.FromArgb(23, 24, 29);
+            buttonKoroba.CausesValidation = false;
+            buttonKoroba.FlatAppearance.BorderSize = 0;
+            buttonKoroba.FlatStyle = FlatStyle.Flat;
+            buttonKoroba.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonKoroba.ForeColor = SystemColors.Window;
+            buttonKoroba.Image = (Image)resources.GetObject("buttonKoroba.Image");
+            buttonKoroba.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonKoroba.Location = new Point(1, 4);
+            buttonKoroba.Margin = new Padding(0);
+            buttonKoroba.Name = "buttonKoroba";
+            buttonKoroba.Size = new Size(185, 52);
+            buttonKoroba.TabIndex = 3;
+            buttonKoroba.Text = "         Короба";
+            buttonKoroba.TextAlign = ContentAlignment.MiddleLeft;
+            buttonKoroba.UseVisualStyleBackColor = false;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(23, 24, 29);
+            panel4.Controls.Add(button2);
+            panel4.Location = new Point(0, 108);
+            panel4.Margin = new Padding(0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(185, 56);
+            panel4.TabIndex = 4;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(23, 24, 29);
+            button2.CausesValidation = false;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            button2.ForeColor = SystemColors.Window;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(1, 3);
+            button2.Margin = new Padding(0);
+            button2.Name = "button2";
+            button2.Size = new Size(185, 52);
+            button2.TabIndex = 3;
+            button2.Text = "         Склады";
+            button2.TextAlign = ContentAlignment.MiddleLeft;
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // SidebarTransition
+            // 
+            SidebarTransition.Interval = 5;
+            SidebarTransition.Tick += SidebarTransition_Tick;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1217, 609);
-            Controls.Add(tableLayoutPanel1);
+            ClientSize = new Size(1217, 616);
+            Controls.Add(dataGridView1);
+            Controls.Add(buttonSavePodsorti);
+            Controls.Add(sidebar);
+            Controls.Add(btnopen);
+            Controls.Add(panel2);
+            FormBorderStyle = FormBorderStyle.None;
             MinimumSize = new Size(816, 616);
             Name = "FormMain";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "WB поставки";
-            tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            tableLayoutPanel2.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxTables1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).EndInit();
-            tableLayoutPanel3.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)btmHam).EndInit();
+            sidebar.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel4.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private TableLayoutPanel tableLayoutPanel1;
         private Button btnopen;
         private DataGridView dataGridView1;
-        private TableLayoutPanel tableLayoutPanel2;
-        private Panel panel1;
-        private PictureBox pictureBoxTables1;
-        private Label labelTables1;
         private BindingSource bindingSourcePodsorti;
         private BindingSource bindingSourceFullTable;
-        private TableLayoutPanel tableLayoutPanel3;
         private Button buttonSavePodsorti;
+        private Panel panel2;
+        private Label label1;
+        private PictureBox btmHam;
+        private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
+        private FlowLayoutPanel sidebar;
+        private Button buttonPodsortiTab;
+        private Panel panel1;
+        private Button buttonKoroba;
+        private Button button2;
+        private Panel panel3;
+        private Panel panel4;
+        private System.Windows.Forms.Timer SidebarTransition;
     }
 }

@@ -12,6 +12,7 @@
     <PackageReference Include="ClosedXML" Version="0.102.1" />
     <PackageReference Include="EPPlus" Version="6.2.10" />
     <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="ReaLTaiizor" Version="3.7.9.6" />
     <PackageReference Include="System.Data.OleDb" Version="7.0.0" />
   </ItemGroup>
 

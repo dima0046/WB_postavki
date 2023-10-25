@@ -20,7 +20,7 @@ namespace WB_postavki
         //Открыть документ Excel
         private void btnopen_Click(object sender, EventArgs e)
         {
-            loadFIleIntoDataSet();   
+            loadFIleIntoDataSet();
         }
 
         private void buttonSavePodsorti_Click(object sender, EventArgs e)
@@ -131,16 +131,16 @@ namespace WB_postavki
 
         private void loadFIleIntoDataSet()
         {
-        string sourceFilePath;
-        string destinationFilePath;
+            string sourceFilePath;
+            string destinationFilePath;
 
 
-        OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
-        openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
-        openFileDialog.FilterIndex = 2;
-        openFileDialog.RestoreDirectory = true;
+            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -231,8 +231,8 @@ namespace WB_postavki
             {
                 string filepath = saveFileDialog.FileName;
                 FileInfo file = new FileInfo(filepath); // Замените на свой путь и имя файла
-                                                        
-                
+
+
 
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
@@ -259,17 +259,51 @@ namespace WB_postavki
             }
         }
 
-    }
-        public class groupData
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            public string Brand { get; set; }
-            public string ArtSeller { get; set; }
-            public long ArtWB { get; set; }
-            public long Barcode { get; set; }
-            public int TotalCount { get; set; }
-            public int NewCount { get; set; }
+
         }
 
+        bool sidebarExpand = true;
 
-    
+        private void SidebarTransition_Tick(object sender, EventArgs e)
+        {
+            if (sidebarExpand)
+            {
+                sidebar.Width -= 5;
+                if (sidebar.Width <= 40)
+                {
+                    sidebarExpand = false;
+                    SidebarTransition.Stop();
+                }
+
+            }
+            else
+            {
+                sidebar.Width += 5;
+                if (sidebar.Width >= 185)
+                {
+                    sidebarExpand = true;
+                    SidebarTransition.Stop();
+                }
+            }
+        }
+
+        private void btmHam_Click(object sender, EventArgs e)
+        {
+            SidebarTransition.Start();
+        }
+    }
+    public class groupData
+    {
+        public string Brand { get; set; }
+        public string ArtSeller { get; set; }
+        public long ArtWB { get; set; }
+        public long Barcode { get; set; }
+        public int TotalCount { get; set; }
+        public int NewCount { get; set; }
+    }
+
+
+
 }

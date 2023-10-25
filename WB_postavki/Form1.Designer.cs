@@ -35,42 +35,44 @@
             btnopen = new Button();
             bindingSourcePodsorti = new BindingSource(components);
             bindingSourceFullTable = new BindingSource(components);
-            panel2 = new Panel();
+            panelMenu = new Panel();
             nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             label1 = new Label();
-            panel1 = new Panel();
             btmHam = new PictureBox();
             sidebar = new FlowLayoutPanel();
-            buttonPodsortiTab = new Button();
-            panel3 = new Panel();
+            panelPodsorti = new Panel();
+            buttonPodsorti = new Button();
+            panelSkladi = new Panel();
+            buttonSkladi = new Button();
+            panelKoroba = new Panel();
             buttonKoroba = new Button();
-            panel4 = new Panel();
-            button2 = new Button();
+            buttonPodsortiTab = new Button();
             SidebarTransition = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).BeginInit();
-            panel2.SuspendLayout();
+            panelMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btmHam).BeginInit();
             sidebar.SuspendLayout();
-            panel3.SuspendLayout();
-            panel4.SuspendLayout();
+            panelPodsorti.SuspendLayout();
+            panelSkladi.SuspendLayout();
+            panelKoroba.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(947, 156);
+            dataGridView1.Location = new Point(784, 306);
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(291, 486);
+            dataGridView1.Size = new Size(421, 301);
             dataGridView1.TabIndex = 1;
             // 
             // buttonSavePodsorti
             // 
             buttonSavePodsorti.FlatStyle = FlatStyle.System;
-            buttonSavePodsorti.Location = new Point(753, 156);
+            buttonSavePodsorti.Location = new Point(1008, 256);
             buttonSavePodsorti.Name = "buttonSavePodsorti";
             buttonSavePodsorti.Size = new Size(169, 26);
             buttonSavePodsorti.TabIndex = 1;
@@ -81,7 +83,7 @@
             // btnopen
             // 
             btnopen.FlatStyle = FlatStyle.System;
-            btnopen.Location = new Point(597, 156);
+            btnopen.Location = new Point(870, 256);
             btnopen.Name = "btnopen";
             btnopen.Size = new Size(113, 26);
             btnopen.TabIndex = 0;
@@ -89,19 +91,18 @@
             btnopen.UseVisualStyleBackColor = true;
             btnopen.Click += btnopen_Click;
             // 
-            // panel2
+            // panelMenu
             // 
-            panel2.BackColor = Color.White;
-            panel2.Controls.Add(nightControlBox1);
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(panel1);
-            panel2.Controls.Add(btmHam);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
-            panel2.Margin = new Padding(0);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1217, 44);
-            panel2.TabIndex = 1;
+            panelMenu.BackColor = Color.White;
+            panelMenu.Controls.Add(nightControlBox1);
+            panelMenu.Controls.Add(label1);
+            panelMenu.Controls.Add(btmHam);
+            panelMenu.Dock = DockStyle.Top;
+            panelMenu.Location = new Point(0, 0);
+            panelMenu.Margin = new Padding(0);
+            panelMenu.Name = "panelMenu";
+            panelMenu.Size = new Size(1217, 31);
+            panelMenu.TabIndex = 1;
             // 
             // nightControlBox1
             // 
@@ -130,20 +131,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(57, 7);
+            label1.Location = new Point(57, -1);
             label1.Name = "label1";
-            label1.Size = new Size(128, 30);
+            label1.Size = new Size(188, 30);
             label1.TabIndex = 2;
-            label1.Text = "WB Asistent";
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.FromArgb(23, 24, 29);
-            panel1.Location = new Point(0, 44);
-            panel1.Margin = new Padding(0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(185, 56);
-            panel1.TabIndex = 4;
+            label1.Text = "WB Выручалочка";
             // 
             // btmHam
             // 
@@ -151,7 +143,7 @@
             btmHam.Image = (Image)resources.GetObject("btmHam.Image");
             btmHam.Location = new Point(0, 0);
             btmHam.Name = "btmHam";
-            btmHam.Size = new Size(40, 44);
+            btmHam.Size = new Size(40, 31);
             btmHam.SizeMode = PictureBoxSizeMode.CenterImage;
             btmHam.TabIndex = 1;
             btmHam.TabStop = false;
@@ -160,44 +152,85 @@
             // sidebar
             // 
             sidebar.BackColor = Color.FromArgb(23, 24, 29);
-            sidebar.Controls.Add(buttonPodsortiTab);
-            sidebar.Controls.Add(panel3);
-            sidebar.Controls.Add(panel4);
+            sidebar.Controls.Add(panelPodsorti);
+            sidebar.Controls.Add(panelSkladi);
+            sidebar.Controls.Add(panelKoroba);
             sidebar.Dock = DockStyle.Left;
-            sidebar.Location = new Point(0, 44);
+            sidebar.Location = new Point(0, 31);
             sidebar.Margin = new Padding(0);
             sidebar.Name = "sidebar";
-            sidebar.Size = new Size(185, 572);
+            sidebar.Size = new Size(185, 585);
             sidebar.TabIndex = 2;
             // 
-            // buttonPodsortiTab
+            // panelPodsorti
             // 
-            buttonPodsortiTab.BackColor = Color.FromArgb(23, 24, 29);
-            buttonPodsortiTab.CausesValidation = false;
-            buttonPodsortiTab.FlatAppearance.BorderSize = 0;
-            buttonPodsortiTab.FlatStyle = FlatStyle.Flat;
-            buttonPodsortiTab.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonPodsortiTab.ForeColor = SystemColors.Window;
-            buttonPodsortiTab.Image = (Image)resources.GetObject("buttonPodsortiTab.Image");
-            buttonPodsortiTab.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonPodsortiTab.Location = new Point(0, 0);
-            buttonPodsortiTab.Margin = new Padding(0);
-            buttonPodsortiTab.Name = "buttonPodsortiTab";
-            buttonPodsortiTab.Size = new Size(185, 52);
-            buttonPodsortiTab.TabIndex = 3;
-            buttonPodsortiTab.Text = "         Подсорты";
-            buttonPodsortiTab.TextAlign = ContentAlignment.MiddleLeft;
-            buttonPodsortiTab.UseVisualStyleBackColor = false;
+            panelPodsorti.BackColor = Color.FromArgb(23, 24, 29);
+            panelPodsorti.Controls.Add(buttonPodsorti);
+            panelPodsorti.Location = new Point(0, 0);
+            panelPodsorti.Margin = new Padding(0);
+            panelPodsorti.Name = "panelPodsorti";
+            panelPodsorti.Size = new Size(185, 52);
+            panelPodsorti.TabIndex = 4;
             // 
-            // panel3
+            // buttonPodsorti
             // 
-            panel3.BackColor = Color.FromArgb(23, 24, 29);
-            panel3.Controls.Add(buttonKoroba);
-            panel3.Location = new Point(0, 52);
-            panel3.Margin = new Padding(0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(185, 56);
-            panel3.TabIndex = 4;
+            buttonPodsorti.BackColor = Color.FromArgb(23, 24, 29);
+            buttonPodsorti.CausesValidation = false;
+            buttonPodsorti.FlatAppearance.BorderSize = 0;
+            buttonPodsorti.FlatStyle = FlatStyle.Flat;
+            buttonPodsorti.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPodsorti.ForeColor = SystemColors.Window;
+            buttonPodsorti.Image = (Image)resources.GetObject("buttonPodsorti.Image");
+            buttonPodsorti.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonPodsorti.Location = new Point(0, 0);
+            buttonPodsorti.Margin = new Padding(0);
+            buttonPodsorti.Name = "buttonPodsorti";
+            buttonPodsorti.Size = new Size(185, 52);
+            buttonPodsorti.TabIndex = 3;
+            buttonPodsorti.Text = "         Подсорты";
+            buttonPodsorti.TextAlign = ContentAlignment.MiddleLeft;
+            buttonPodsorti.UseVisualStyleBackColor = false;
+            buttonPodsorti.Click += buttonPodsorti_Click;
+            // 
+            // panelSkladi
+            // 
+            panelSkladi.BackColor = Color.FromArgb(23, 24, 29);
+            panelSkladi.Controls.Add(buttonSkladi);
+            panelSkladi.Location = new Point(0, 52);
+            panelSkladi.Margin = new Padding(0);
+            panelSkladi.Name = "panelSkladi";
+            panelSkladi.Size = new Size(185, 52);
+            panelSkladi.TabIndex = 4;
+            // 
+            // buttonSkladi
+            // 
+            buttonSkladi.BackColor = Color.FromArgb(23, 24, 29);
+            buttonSkladi.CausesValidation = false;
+            buttonSkladi.FlatAppearance.BorderSize = 0;
+            buttonSkladi.FlatStyle = FlatStyle.Flat;
+            buttonSkladi.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonSkladi.ForeColor = SystemColors.Window;
+            buttonSkladi.Image = (Image)resources.GetObject("buttonSkladi.Image");
+            buttonSkladi.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonSkladi.Location = new Point(1, 0);
+            buttonSkladi.Margin = new Padding(0);
+            buttonSkladi.Name = "buttonSkladi";
+            buttonSkladi.Size = new Size(185, 52);
+            buttonSkladi.TabIndex = 3;
+            buttonSkladi.Text = "         Склады";
+            buttonSkladi.TextAlign = ContentAlignment.MiddleLeft;
+            buttonSkladi.UseVisualStyleBackColor = false;
+            buttonSkladi.Click += button2_Click;
+            // 
+            // panelKoroba
+            // 
+            panelKoroba.BackColor = Color.FromArgb(23, 24, 29);
+            panelKoroba.Controls.Add(buttonKoroba);
+            panelKoroba.Location = new Point(0, 104);
+            panelKoroba.Margin = new Padding(0);
+            panelKoroba.Name = "panelKoroba";
+            panelKoroba.Size = new Size(185, 52);
+            panelKoroba.TabIndex = 4;
             // 
             // buttonKoroba
             // 
@@ -218,38 +251,28 @@
             buttonKoroba.TextAlign = ContentAlignment.MiddleLeft;
             buttonKoroba.UseVisualStyleBackColor = false;
             // 
-            // panel4
+            // buttonPodsortiTab
             // 
-            panel4.BackColor = Color.FromArgb(23, 24, 29);
-            panel4.Controls.Add(button2);
-            panel4.Location = new Point(0, 108);
-            panel4.Margin = new Padding(0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(185, 56);
-            panel4.TabIndex = 4;
-            // 
-            // button2
-            // 
-            button2.BackColor = Color.FromArgb(23, 24, 29);
-            button2.CausesValidation = false;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.ForeColor = SystemColors.Window;
-            button2.Image = (Image)resources.GetObject("button2.Image");
-            button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(1, 3);
-            button2.Margin = new Padding(0);
-            button2.Name = "button2";
-            button2.Size = new Size(185, 52);
-            button2.TabIndex = 3;
-            button2.Text = "         Склады";
-            button2.TextAlign = ContentAlignment.MiddleLeft;
-            button2.UseVisualStyleBackColor = false;
+            buttonPodsortiTab.BackColor = Color.FromArgb(23, 24, 29);
+            buttonPodsortiTab.CausesValidation = false;
+            buttonPodsortiTab.FlatAppearance.BorderSize = 0;
+            buttonPodsortiTab.FlatStyle = FlatStyle.Flat;
+            buttonPodsortiTab.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonPodsortiTab.ForeColor = SystemColors.Window;
+            buttonPodsortiTab.Image = (Image)resources.GetObject("buttonPodsortiTab.Image");
+            buttonPodsortiTab.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonPodsortiTab.Location = new Point(0, 0);
+            buttonPodsortiTab.Margin = new Padding(0);
+            buttonPodsortiTab.Name = "buttonPodsortiTab";
+            buttonPodsortiTab.Size = new Size(157, 52);
+            buttonPodsortiTab.TabIndex = 3;
+            buttonPodsortiTab.Text = "         Подсорты";
+            buttonPodsortiTab.TextAlign = ContentAlignment.MiddleLeft;
+            buttonPodsortiTab.UseVisualStyleBackColor = false;
             // 
             // SidebarTransition
             // 
-            SidebarTransition.Interval = 5;
+            SidebarTransition.Interval = 3;
             SidebarTransition.Tick += SidebarTransition_Tick;
             // 
             // FormMain
@@ -261,8 +284,9 @@
             Controls.Add(buttonSavePodsorti);
             Controls.Add(sidebar);
             Controls.Add(btnopen);
-            Controls.Add(panel2);
+            Controls.Add(panelMenu);
             FormBorderStyle = FormBorderStyle.None;
+            IsMdiContainer = true;
             MinimumSize = new Size(816, 616);
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
@@ -270,12 +294,13 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            panelMenu.ResumeLayout(false);
+            panelMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btmHam).EndInit();
             sidebar.ResumeLayout(false);
-            panel3.ResumeLayout(false);
-            panel4.ResumeLayout(false);
+            panelPodsorti.ResumeLayout(false);
+            panelSkladi.ResumeLayout(false);
+            panelKoroba.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -285,17 +310,18 @@
         private BindingSource bindingSourcePodsorti;
         private BindingSource bindingSourceFullTable;
         private Button buttonSavePodsorti;
-        private Panel panel2;
+        private Panel panelMenu;
         private Label label1;
         private PictureBox btmHam;
         private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
         private FlowLayoutPanel sidebar;
         private Button buttonPodsortiTab;
-        private Panel panel1;
         private Button buttonKoroba;
-        private Button button2;
-        private Panel panel3;
-        private Panel panel4;
+        private Button buttonSkladi;
+        private Panel panelKoroba;
+        private Panel panelSkladi;
         private System.Windows.Forms.Timer SidebarTransition;
+        private Panel panelPodsorti;
+        private Button buttonPodsorti;
     }
 }

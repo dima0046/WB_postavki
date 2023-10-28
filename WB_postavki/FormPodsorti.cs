@@ -1,22 +1,8 @@
-﻿using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
-
 using OfficeOpenXml;
-using Microsoft.Office.Interop.Excel;
-using System.Data;
+using System.ComponentModel;
 using System.Data.OleDb;
-using System.Windows.Forms;
-using System.Drawing;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 
 namespace WB_postavki
 {
@@ -27,6 +13,9 @@ namespace WB_postavki
         public FormPodsorti()
         {
             InitializeComponent();
+
+            // Или, если вы хотите использовать LicenseContext для EPPlus:
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
         }
 
         private void FormPodsorti_FormClosed(object sender, FormClosedEventArgs e)
@@ -48,9 +37,6 @@ namespace WB_postavki
         {
             SaveExcel();
         }
-
-
-
 
         private void loadFIleIntoDataSet()
         {
@@ -153,136 +139,74 @@ namespace WB_postavki
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filepath = saveFileDialog.FileName;
-                FileInfo file = new FileInfo(filepath); // Замените на свой путь и имя файла
-
-
+                FileInfo file = new FileInfo(filepath);
 
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
                     ExcelWorksheet ws = package.Workbook.Worksheets.Add("Новый лист");
+                    int excelRow = 1;
+                    int columnCount = 1;
 
                     // Добавляем наименования столбцов
-                    // Добавляем наименования столбцов
-                    for (int i = 0; i < dataTable.Columns.Count; i++)
+                    for (int i = 0; i < grT.Columns.Count; i++)
                     {
-                        ws.Cells[1, i + 1].Value = dataTable.Columns[i].ColumnName;
-                    }
-
-                    // Записываем данные из DataTable в ячейки Excel
-                    for (int i = 0; i < dataTable.Rows.Count; i++)
-                    {
-                        for (int j = 0; j < dataTable.Columns.Count; j++)
+                        if (grT.Columns[i].ColumnName != "Текущий остаток, шт.") // Проверяем наименование столбца
                         {
-                            ws.Cells[i + 1, j + 1].Value = dataTable.Rows[i][j];
+                            var cell = ws.Cells[excelRow, columnCount];
+                            columnCount++;
+                            cell.Value = grT.Columns[i].ColumnName;
+                            var cellStyle = cell.Style;
+                            cellStyle.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            cellStyle.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightBlue);
+                            cellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            cellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
                         }
                     }
 
+                    excelRow = 1;
+
+                    // Записываем данные из DataTable в ячейки Excel
+                    for (int i = 0; i < grT.Rows.Count; i++)
+                    {
+                        var newValue = grT.Rows[i]["Новое количество"];
+                        if (newValue != DBNull.Value && !string.IsNullOrEmpty(newValue.ToString()) && Convert.ToInt32(newValue) != 0)
+                        {
+                            excelRow++; // Инкрементируем excelRow только если строка добавляется
+                            columnCount = 1;
+                            for (int j = 0; j < grT.Columns.Count; j++)
+                            {
+                                if (grT.Columns[j].ColumnName != "Текущий остаток, шт." && grT.Columns[j].ColumnName != "Новое количество") // Проверяем наименование столбца
+                                {
+                                    var cell = ws.Cells[excelRow, columnCount];
+                                    cell.Value = grT.Rows[i][j];
+                                    var cellStyle = cell.Style;
+                                    cellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                    cellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                    cellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                    cellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                    columnCount++;
+                                }
+                            }
+                            // Устанавливаем стиль границ для последней колонки
+                            var lastCell = ws.Cells[excelRow, columnCount];
+                            lastCell.Value = grT.Rows[i][grT.Columns.Count - 1];
+                            var lastCellStyle = lastCell.Style;
+                            lastCellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            lastCellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            lastCellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            lastCellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                            lastCellStyle.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                            lastCellStyle.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
+                        }
+                    }
                     package.Save();
                 }
             }
+
+
         }
-
-        #region Загрузка Excel файла. Вариант 1. Без БД
-        private void loadfile()
-        {
-            string sourceFilePath;
-            string destinationFilePath;
-
-
-
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
-            openFileDialog.FilterIndex = 2;
-            openFileDialog.RestoreDirectory = true;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                // Получаем путь к выбранному файлу
-                sourceFilePath = openFileDialog.FileName;
-                destinationFilePath = openFileDialog.FileName;
-
-                // Создаем объекты FileInfo для исходного и целевого файлов
-                FileInfo sourceFileInfo = new FileInfo(sourceFilePath);
-                FileInfo destinationFileInfo = new FileInfo(destinationFilePath);
-
-
-                string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + sourceFileInfo + ";Extended Properties='Excel 12.0 XML;HDR=YES'";
-                // Устанавливаем контекст лицензирования как некоммерческий
-                //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-                // Используем using для автоматического уничтожения объекта ExcelPackage
-                using (ExcelPackage sourcePackage = new ExcelPackage(sourceFileInfo))
-                {
-                    // Получаем первый лист из Excel-книги
-                    ExcelWorksheet worksheet = sourcePackage.Workbook.Worksheets[0];
-
-                    //удаляем первую строку (название)
-                    worksheet.DeleteRow(1);
-                    worksheet.DeleteRow(1);
-
-                    // Получение всех данных из листа Excel
-                    var totalData = worksheet.Cells["A1:Q" + worksheet.Dimension.End.Row].Value;
-                    List<object[]> dataRows = new List<object[]>();
-
-                    // Итерация по всем строкам и добавление данных в список
-                    for (int row = 1; row <= worksheet.Dimension.End.Row; row++)
-                    {
-                        object[] rowData = new object[5]; // Учитывайте, что здесь 5 - количество нужных столбцов
-                        rowData[0] = worksheet.Cells[row, 1].Value; // Бренд
-                        rowData[1] = worksheet.Cells[row, 6].Value; // Артикул продавца
-                        rowData[2] = worksheet.Cells[row, 7].Value; // Артикул WB
-                        rowData[3] = worksheet.Cells[row, 8].Value; // Баркод
-                        rowData[4] = worksheet.Cells[row, 17].Value; // Текущий остаток
-                        dataRows.Add(rowData);
-                    }
-
-                    // Группировка данных по столбцу "Артикул WB"
-                    var result = dataRows.GroupBy(row => row[2]?.ToString().Trim().ToUpper())
-                                         .Select(g => new
-                                         {
-                                             ArticulWB = g.Key,
-                                             Rows = g.ToList()
-                                         });
-
-                    // Создание DataTable для отображения в DataGridView
-                    System.Data.DataTable dt = new System.Data.DataTable();
-
-                    // Добавление столбцов в DataTable
-                    dt.Columns.Add("Бренд", typeof(string));
-                    dt.Columns.Add("Артикул продавца", typeof(string));
-                    dt.Columns.Add("Артикул WB", typeof(string));
-                    dt.Columns.Add("Баркод", typeof(string));
-                    dt.Columns.Add("Текущий остаток", typeof(int));
-
-
-                    // Итерация по результатам группировки и суммирование остатков
-                    foreach (var group in result)
-                    {
-                        int sum = 0;
-                        foreach (var row in group.Rows)
-                        {
-                            sum += int.TryParse(row[4]?.ToString(), out int quantity) ? quantity : 0;
-                        }
-                        // Добавление строки с результатами в DataTable
-                        dt.Rows.Add(group.Rows[0][0], group.Rows[0][1], group.ArticulWB, group.Rows[0][3], sum);
-                    }
-
-                    // Создание BindingSource
-                    BindingSource bindingSourcePodsorti = new BindingSource();
-
-                    // Привязка DataTable к BindingSource
-                    bindingSourcePodsorti.DataSource = dt;
-
-                    // Привязка BindingSource к DataGridView
-                    dataGridView1.DataSource = bindingSourcePodsorti;
-
-                }
-            }
-        }
-        #endregion
-
         public class groupData
         {
             public string Brand { get; set; }

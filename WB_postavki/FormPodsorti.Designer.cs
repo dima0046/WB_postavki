@@ -33,9 +33,11 @@
             btnSave = new ReaLTaiizor.Controls.Button();
             button2 = new ReaLTaiizor.Controls.Button();
             dataGridView1 = new DataGridView();
-            buttonSavePodsorti = new Button();
-            button1 = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // btnOpen
@@ -50,7 +52,7 @@
             btnOpen.Image = (Image)resources.GetObject("btnOpen.Image");
             btnOpen.ImageAlign = ContentAlignment.MiddleCenter;
             btnOpen.InactiveColor = Color.FromArgb(32, 34, 37);
-            btnOpen.Location = new Point(12, 12);
+            btnOpen.Location = new Point(2, 6);
             btnOpen.Name = "btnOpen";
             btnOpen.PressedBorderColor = Color.FromArgb(165, 37, 37);
             btnOpen.PressedColor = Color.FromArgb(165, 37, 37);
@@ -71,7 +73,7 @@
             btnSave.Image = (Image)resources.GetObject("btnSave.Image");
             btnSave.ImageAlign = ContentAlignment.MiddleCenter;
             btnSave.InactiveColor = Color.FromArgb(32, 34, 37);
-            btnSave.Location = new Point(63, 12);
+            btnSave.Location = new Point(53, 6);
             btnSave.Name = "btnSave";
             btnSave.PressedBorderColor = Color.FromArgb(165, 37, 37);
             btnSave.PressedColor = Color.FromArgb(165, 37, 37);
@@ -92,7 +94,7 @@
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleCenter;
             button2.InactiveColor = Color.FromArgb(32, 34, 37);
-            button2.Location = new Point(114, 12);
+            button2.Location = new Point(104, 6);
             button2.Name = "button2";
             button2.PressedBorderColor = Color.FromArgb(165, 37, 37);
             button2.PressedColor = Color.FromArgb(165, 37, 37);
@@ -103,32 +105,40 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(190, 100);
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(0, 60);
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(421, 301);
+            dataGridView1.Size = new Size(800, 390);
             dataGridView1.TabIndex = 4;
             // 
-            // buttonSavePodsorti
+            // tableLayoutPanel1
             // 
-            buttonSavePodsorti.FlatStyle = FlatStyle.System;
-            buttonSavePodsorti.Location = new Point(414, 50);
-            buttonSavePodsorti.Name = "buttonSavePodsorti";
-            buttonSavePodsorti.Size = new Size(169, 26);
-            buttonSavePodsorti.TabIndex = 3;
-            buttonSavePodsorti.Text = "Сохранить подсорты";
-            buttonSavePodsorti.UseVisualStyleBackColor = true;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
+            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(800, 450);
+            tableLayoutPanel1.TabIndex = 5;
             // 
-            // button1
+            // panel1
             // 
-            button1.FlatStyle = FlatStyle.System;
-            button1.Location = new Point(276, 50);
-            button1.Name = "button1";
-            button1.Size = new Size(113, 26);
-            button1.TabIndex = 2;
-            button1.Text = "Открыть";
-            button1.UseVisualStyleBackColor = true;
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(btnOpen);
+            panel1.Controls.Add(btnSave);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(794, 54);
+            panel1.TabIndex = 5;
             // 
             // FormPodsorti
             // 
@@ -137,18 +147,15 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(800, 450);
-            Controls.Add(dataGridView1);
-            Controls.Add(buttonSavePodsorti);
-            Controls.Add(button1);
-            Controls.Add(button2);
-            Controls.Add(btnSave);
-            Controls.Add(btnOpen);
+            Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormPodsorti";
             Text = "FormPodsorti";
             FormClosed += FormPodsorti_FormClosed;
             Load += FormPodsorti_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -158,7 +165,7 @@
         private ReaLTaiizor.Controls.Button btnSave;
         private ReaLTaiizor.Controls.Button button2;
         private DataGridView dataGridView1;
-        private Button buttonSavePodsorti;
-        private Button button1;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panel1;
     }
 }

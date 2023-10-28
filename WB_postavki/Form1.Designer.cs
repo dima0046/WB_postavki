@@ -30,9 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            dataGridView1 = new DataGridView();
-            buttonSavePodsorti = new Button();
-            btnopen = new Button();
             bindingSourcePodsorti = new BindingSource(components);
             bindingSourceFullTable = new BindingSource(components);
             panelMenu = new Panel();
@@ -48,7 +45,6 @@
             buttonKoroba = new Button();
             buttonPodsortiTab = new Button();
             SidebarTransition = new System.Windows.Forms.Timer(components);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).BeginInit();
             panelMenu.SuspendLayout();
@@ -58,38 +54,6 @@
             panelSkladi.SuspendLayout();
             panelKoroba.SuspendLayout();
             SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(784, 306);
-            dataGridView1.Margin = new Padding(0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(421, 301);
-            dataGridView1.TabIndex = 1;
-            // 
-            // buttonSavePodsorti
-            // 
-            buttonSavePodsorti.FlatStyle = FlatStyle.System;
-            buttonSavePodsorti.Location = new Point(1008, 256);
-            buttonSavePodsorti.Name = "buttonSavePodsorti";
-            buttonSavePodsorti.Size = new Size(169, 26);
-            buttonSavePodsorti.TabIndex = 1;
-            buttonSavePodsorti.Text = "Сохранить подсорты";
-            buttonSavePodsorti.UseVisualStyleBackColor = true;
-            buttonSavePodsorti.Click += buttonSavePodsorti_Click;
-            // 
-            // btnopen
-            // 
-            btnopen.FlatStyle = FlatStyle.System;
-            btnopen.Location = new Point(870, 256);
-            btnopen.Name = "btnopen";
-            btnopen.Size = new Size(113, 26);
-            btnopen.TabIndex = 0;
-            btnopen.Text = "Открыть";
-            btnopen.UseVisualStyleBackColor = true;
-            btnopen.Click += btnopen_Click;
             // 
             // panelMenu
             // 
@@ -103,6 +67,9 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(1217, 31);
             panelMenu.TabIndex = 1;
+            panelMenu.MouseDown += panelMenu_MouseDown;
+            panelMenu.MouseMove += panelMenu_MouseMove;
+            panelMenu.MouseUp += panelMenu_MouseUp;
             // 
             // nightControlBox1
             // 
@@ -250,6 +217,7 @@
             buttonKoroba.Text = "         Короба";
             buttonKoroba.TextAlign = ContentAlignment.MiddleLeft;
             buttonKoroba.UseVisualStyleBackColor = false;
+            buttonKoroba.Click += buttonKoroba_Click;
             // 
             // buttonPodsortiTab
             // 
@@ -280,10 +248,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1217, 616);
-            Controls.Add(dataGridView1);
-            Controls.Add(buttonSavePodsorti);
             Controls.Add(sidebar);
-            Controls.Add(btnopen);
             Controls.Add(panelMenu);
             FormBorderStyle = FormBorderStyle.None;
             IsMdiContainer = true;
@@ -291,7 +256,6 @@
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "WB поставки";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourcePodsorti).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceFullTable).EndInit();
             panelMenu.ResumeLayout(false);
@@ -305,11 +269,8 @@
         }
 
         #endregion
-        private Button btnopen;
-        private DataGridView dataGridView1;
         private BindingSource bindingSourcePodsorti;
         private BindingSource bindingSourceFullTable;
-        private Button buttonSavePodsorti;
         private Panel panelMenu;
         private Label label1;
         private PictureBox btmHam;

@@ -32,6 +32,10 @@
             btnOpen = new ReaLTaiizor.Controls.Button();
             btnSave = new ReaLTaiizor.Controls.Button();
             button2 = new ReaLTaiizor.Controls.Button();
+            dataGridView1 = new DataGridView();
+            buttonSavePodsorti = new Button();
+            button1 = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // btnOpen
@@ -53,6 +57,7 @@
             btnOpen.Size = new Size(45, 45);
             btnOpen.TabIndex = 0;
             btnOpen.TextAlignment = StringAlignment.Center;
+            btnOpen.Click += btnOpen_Click;
             // 
             // btnSave
             // 
@@ -73,6 +78,7 @@
             btnSave.Size = new Size(45, 45);
             btnSave.TabIndex = 0;
             btnSave.TextAlignment = StringAlignment.Center;
+            btnSave.Click += btnSave_Click;
             // 
             // button2
             // 
@@ -94,12 +100,46 @@
             button2.TabIndex = 0;
             button2.TextAlignment = StringAlignment.Center;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(190, 100);
+            dataGridView1.Margin = new Padding(0);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(421, 301);
+            dataGridView1.TabIndex = 4;
+            // 
+            // buttonSavePodsorti
+            // 
+            buttonSavePodsorti.FlatStyle = FlatStyle.System;
+            buttonSavePodsorti.Location = new Point(414, 50);
+            buttonSavePodsorti.Name = "buttonSavePodsorti";
+            buttonSavePodsorti.Size = new Size(169, 26);
+            buttonSavePodsorti.TabIndex = 3;
+            buttonSavePodsorti.Text = "Сохранить подсорты";
+            buttonSavePodsorti.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.FlatStyle = FlatStyle.System;
+            button1.Location = new Point(276, 50);
+            button1.Name = "button1";
+            button1.Size = new Size(113, 26);
+            button1.TabIndex = 2;
+            button1.Text = "Открыть";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // FormPodsorti
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(800, 450);
+            Controls.Add(dataGridView1);
+            Controls.Add(buttonSavePodsorti);
+            Controls.Add(button1);
             Controls.Add(button2);
             Controls.Add(btnSave);
             Controls.Add(btnOpen);
@@ -108,6 +148,7 @@
             Text = "FormPodsorti";
             FormClosed += FormPodsorti_FormClosed;
             Load += FormPodsorti_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -116,5 +157,8 @@
         private ReaLTaiizor.Controls.Button btnOpen;
         private ReaLTaiizor.Controls.Button btnSave;
         private ReaLTaiizor.Controls.Button button2;
+        private DataGridView dataGridView1;
+        private Button buttonSavePodsorti;
+        private Button button1;
     }
 }

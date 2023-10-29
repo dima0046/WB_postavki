@@ -32,13 +32,13 @@
             btnOpen = new ReaLTaiizor.Controls.Button();
             btnSave = new ReaLTaiizor.Controls.Button();
             button2 = new ReaLTaiizor.Controls.Button();
-            dataGridView1 = new DataGridView();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
             buttonImageAdd = new ReaLTaiizor.Controls.Button();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            dataGridView1 = new DataGridView();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // btnOpen
@@ -102,27 +102,15 @@
             button2.Size = new Size(45, 45);
             button2.TabIndex = 0;
             button2.TextAlignment = StringAlignment.Center;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 60);
-            dataGridView1.Margin = new Padding(0);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(800, 390);
-            dataGridView1.TabIndex = 4;
-            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
-            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+            button2.Visible = false;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
             tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -165,6 +153,17 @@
             buttonImageAdd.TextAlignment = StringAlignment.Center;
             buttonImageAdd.Click += buttonImageAdd_Click;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Location = new Point(3, 63);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowTemplate.Height = 25;
+            dataGridView1.Size = new Size(794, 384);
+            dataGridView1.TabIndex = 6;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            // 
             // FormPodsorti
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -178,9 +177,9 @@
             Text = "FormPodsorti";
             FormClosed += FormPodsorti_FormClosed;
             Load += FormPodsorti_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -189,9 +188,9 @@
         private ReaLTaiizor.Controls.Button btnOpen;
         private ReaLTaiizor.Controls.Button btnSave;
         private ReaLTaiizor.Controls.Button button2;
-        private DataGridView dataGridView1;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel1;
         private ReaLTaiizor.Controls.Button buttonImageAdd;
+        private DataGridView dataGridView1;
     }
 }

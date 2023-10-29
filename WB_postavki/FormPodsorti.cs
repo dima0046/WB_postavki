@@ -6,6 +6,8 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Data.OleDb;
 using DocumentFormat.OpenXml.Spreadsheet;
+using OfficeOpenXml.Drawing;
+using System.IO.Packaging;
 
 namespace WB_postavki
 {
@@ -128,12 +130,7 @@ namespace WB_postavki
                         imgColumn.HeaderText = "Изображения";
                         // Вставляем столбец на первую позицию
                         dataGridView1.Columns.Insert(0, imgColumn);
-
-                        dataGridView1.CellFormatting += dataGridView1_CellFormatting;
-
                         dataGridView1.DataSource = grT;
-
-
                     }
                 }
             }
@@ -154,11 +151,33 @@ namespace WB_postavki
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string filepath = saveFileDialog.FileName;
+                string existingFilePath = saveFileDialog.FileName;
+
+                // Проверка существования файла
+                if (File.Exists(existingFilePath))
+                {
+                    // Удаление файла
+                    File.Delete(existingFilePath);
+                }
+
                 FileInfo file = new FileInfo(filepath);
+
+                int sheetNumber = 1;
+                string sheetName = "Новый лист";
+
+
 
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
-                    ExcelWorksheet ws = package.Workbook.Worksheets.Add("Новый лист");
+                    while (package.Workbook.Worksheets.Any(ws => ws.Name == sheetName))
+                    {
+                        sheetNumber++;
+                        sheetName = "Новый лист " + sheetNumber;
+                    }
+
+                    // Теперь sheetName содержит уникальное имя для листа
+                    ExcelWorksheet ws = package.Workbook.Worksheets.Add(sheetName);
+
                     int excelRow = 1;
                     int columnCount = 1;
 
@@ -185,43 +204,117 @@ namespace WB_postavki
                     // Записываем данные из DataTable в ячейки Excel
                     for (int i = 0; i < grT.Rows.Count; i++)
                     {
+                        // Проверяем наличие нового количества и его корректность
                         var newValue = grT.Rows[i]["Новое количество"];
-                        if (newValue != DBNull.Value && !string.IsNullOrEmpty(newValue.ToString()) && Convert.ToInt32(newValue) != 0)
+                        if (newValue != DBNull.Value && !string.IsNullOrEmpty(newValue.ToString()) &&
+                            Convert.ToInt32(newValue) != 0)
                         {
-                            excelRow++; // Инкрементируем excelRow только если строка добавляется
+                            // Инкрементируем excelRow только если строка добавляется
+                            excelRow++;
+
+                            // Сбрасываем счетчик столбцов
                             columnCount = 1;
+
+                            // Итерация по столбцам
                             for (int j = 0; j < grT.Columns.Count; j++)
                             {
-                                if (grT.Columns[j].ColumnName != "Текущий остаток, шт." && grT.Columns[j].ColumnName != "Новое количество") // Проверяем наименование столбца
+                                // Проверяем наименование столбца и исключаем столбцы с изображениями
+                                if (grT.Columns[j].ColumnName != "Текущий остаток, шт." &&
+                                    grT.Columns[j].ColumnName != "Новое количество")
                                 {
-                                    var cell = ws.Cells[excelRow, columnCount];
-                                    cell.Value = grT.Rows[i][j];
-                                    var cellStyle = cell.Style;
-                                    cellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                                    cellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                                    cellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                                    cellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                                    columnCount++;
+                                    // Получаем ячейку с изображением
+                                    DataGridViewImageCell cellpic =
+                                        dataGridView1.Rows[i].Cells[0] as DataGridViewImageCell;
+                                    // Получаем изображение из ячейки
+                                    if (cellpic.Value != null && cellpic.Value is System.Drawing.Image)
+                                    {
+                                        System.Drawing.Image img = (System.Drawing.Image)cellpic.Value;
+
+                                        // Добавляем изображение в Excel
+                                        if (img != null)
+                                        {
+                                            // Создаем файл изображения для временного хранения
+                                            string fileName = "image" + i.ToString() + ".png";
+
+                                            try
+                                            {
+                                                // Сохраняем изображение как файл
+                                                img.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                // Обработка исключения сохранения изображения
+                                                Console.WriteLine("Ошибка при сохранении изображения: " + ex.Message);
+                                            }
+
+                                            // Создаем объект FileInfo для работы с файлом
+                                            FileInfo fileInfo = new FileInfo(fileName);
+
+                                            // Проверяем, существует ли изображение с таким именем в коллекции и удаляем, если оно уже есть
+                                            if (ws.Drawings["pic" + i.ToString()] != null)
+                                            {
+                                                ws.Drawings.Remove("pic" + i.ToString());
+                                            }
+
+                                            // Добавляем изображение в Excel
+                                            ExcelPicture picture =
+                                                ws.Drawings.AddPicture("pic" + i.ToString(), fileInfo);
+                                            // Устанавливаем позицию изображения в Excel
+                                            picture.SetPosition(excelRow, 0, 0, 0);
+                                            // Устанавливаем размер изображения в Excel
+                                            picture.SetSize(100, 100);
+
+                                            // Освобождаем ресурсы изображения
+                                            img.Dispose();
+
+                                            // Удаляем временный файл после использования
+                                            try
+                                            {
+                                                fileInfo.Delete();
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                // Обработка исключения при удалении файла
+                                                Console.WriteLine("Ошибка при удалении файла: " + ex.Message);
+                                            }
+                                        }
+                                    }
                                 }
+
+
+                                // Добавляем остальные данные в Excel
+                                var cell = ws.Cells[excelRow, columnCount];
+                                cell.Value = grT.Rows[i][j];
+                                var cellStyle = cell.Style;
+                                cellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                cellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                cellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                cellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                                columnCount++;
                             }
-                            // Устанавливаем стиль границ для последней колонки
-                            var lastCell = ws.Cells[excelRow, columnCount];
-                            lastCell.Value = grT.Rows[i][grT.Columns.Count - 1];
-                            var lastCellStyle = lastCell.Style;
-                            lastCellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                            lastCellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                            lastCellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                            lastCellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                            lastCellStyle.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
-                            lastCellStyle.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
                         }
+
+                        // Устанавливаем стиль границ для последней колонки
+                        var lastCell = ws.Cells[excelRow, columnCount];
+                        lastCell.Value = grT.Rows[i][grT.Columns.Count - 1];
+                        var lastCellStyle = lastCell.Style;
+                        lastCellStyle.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        lastCellStyle.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        lastCellStyle.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        lastCellStyle.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                        lastCellStyle.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                        lastCellStyle.Fill.BackgroundColor.SetColor(System.Drawing.Color.LightGreen);
                     }
+
+                    // Сохраняем изменения в пакете Excel
                     package.Save();
+
                 }
             }
-
-
         }
+
+
+
         public class groupData
         {
             public string Brand { get; set; }
@@ -230,32 +323,6 @@ namespace WB_postavki
             public long Barcode { get; set; }
             public int TotalCount { get; set; }
             public int NewCount { get; set; }
-        }
-
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            // Проверка, что текущая ячейка принадлежит столбцу с изображением
-            if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewImageColumn && e.Value != null)
-            {
-                // Получение URL из значения ячейки
-                string imageUrl = e.Value.ToString();
-
-                try
-                {
-                    // Загрузка изображения из URL
-                    WebClient wc = new WebClient();
-                    byte[] bytes = wc.DownloadData(imageUrl);
-                    Image img = Image.FromStream(new System.IO.MemoryStream(bytes));
-
-                    // Присваивание изображения ячейке
-                    e.Value = img;
-                }
-                catch (Exception ex)
-                {
-                    // Обработка ошибок
-                    Console.WriteLine($"Ошибка при загрузке изображения с URL: {imageUrl}. Подробности: {ex.Message}");
-                }
-            }
         }
 
         private void buttonImageAdd_Click(object sender, EventArgs e)
@@ -274,37 +341,45 @@ namespace WB_postavki
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-                FormImageAdd formImageAdd = new FormImageAdd();
-                formImageAdd.Owner = this;
-                if (formImageAdd.ShowDialog() == DialogResult.OK)
+                if (cell is DataGridViewImageCell) // Проверяем, что ячейка является DataGridViewImageCell
                 {
-                    string ImageURL = formImageAdd.GetValue();
-                    cell.Value = ImageURL; // Установите значение ячейки как URL изображения
-                    // Загрузите изображение по URL и установите его как содержимое ячейки
-                    try
+                    FormImageAdd formImageAdd = new FormImageAdd();
+                    formImageAdd.Owner = this;
+                    if (formImageAdd.ShowDialog() == DialogResult.OK)
                     {
-                        WebClient wc = new WebClient();
-                        byte[] bytes = wc.DownloadData(ImageURL);
-                        Image img = Image.FromStream(new System.IO.MemoryStream(bytes));
-                        cell.Value = img;
-                    }
-                    catch (Exception ex)
-                    {
-                        // Обработка ошибок
-                        MessageBox.Show($"Ошибка при загрузке изображения с URL: {ImageURL}. Подробности: {ex.Message}");
+                        string ImageURL = formImageAdd.GetValue();
+                        // Загрузите изображение по URL и установите его как содержимое ячейки
+                        try
+                        {
+                            WebClient wc = new WebClient();
+                            byte[] bytes = wc.DownloadData(ImageURL);
+                            Image img = Image.FromStream(new System.IO.MemoryStream(bytes));
+
+                            // Установите значение ячейки как объект DataGridViewImageCell
+                            ((DataGridViewImageCell)cell).Value = img;
+                        }
+                        catch (Exception ex)
+                        {
+                            // Обработка ошибок
+                            MessageBox.Show($"Ошибка при загрузке изображения с URL: {ImageURL}. Подробности: {ex.Message}");
+                            return;
+                        }
                     }
                 }
             }
+
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Проверка, есть ли выбранная ячейка
-            if (dataGridView1.CurrentCell != null)
+            if (dataGridView1.CurrentCell != null && e.ColumnIndex == 0)
             {
                 DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(dataGridView1.CurrentCell.ColumnIndex, dataGridView1.CurrentCell.RowIndex);
                 AddImageFromURL(args);
             }
         }
+
+
     }
 }

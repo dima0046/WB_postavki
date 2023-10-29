@@ -48,7 +48,7 @@
             button1.PressedBorderColor = Color.FromArgb(165, 37, 37);
             button1.PressedColor = Color.FromArgb(165, 37, 37);
             button1.Size = new Size(102, 33);
-            button1.TabIndex = 0;
+            button1.TabIndex = 2;
             button1.Text = "Отмена";
             button1.TextAlignment = StringAlignment.Center;
             button1.Click += button1_Click;
@@ -68,7 +68,7 @@
             button2.PressedBorderColor = Color.FromArgb(165, 37, 37);
             button2.PressedColor = Color.FromArgb(165, 37, 37);
             button2.Size = new Size(102, 33);
-            button2.TabIndex = 0;
+            button2.TabIndex = 1;
             button2.Text = "OK";
             button2.TextAlignment = StringAlignment.Center;
             button2.Click += button2_Click;
@@ -80,16 +80,17 @@
             TextBoxURL.CustomBGColor = Color.White;
             TextBoxURL.Font = new Font("Tahoma", 11F, FontStyle.Regular, GraphicsUnit.Point);
             TextBoxURL.ForeColor = Color.DimGray;
-            TextBoxURL.Location = new Point(3, 12);
+            TextBoxURL.Location = new Point(2, 12);
             TextBoxURL.MaxLength = 32767;
             TextBoxURL.Multiline = false;
             TextBoxURL.Name = "TextBoxURL";
             TextBoxURL.ReadOnly = false;
-            TextBoxURL.Size = new Size(532, 28);
+            TextBoxURL.Size = new Size(533, 28);
             TextBoxURL.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            TextBoxURL.TabIndex = 1;
+            TextBoxURL.TabIndex = 0;
             TextBoxURL.TextAlignment = HorizontalAlignment.Left;
             TextBoxURL.UseSystemPasswordChar = false;
+            TextBoxURL.TextChanged += TextBoxURL_TextChanged;
             // 
             // FormImageAdd
             // 
@@ -100,6 +101,7 @@
             Controls.Add(button2);
             Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             Name = "FormImageAdd";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Вставьте URL изображения";

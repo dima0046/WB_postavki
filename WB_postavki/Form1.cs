@@ -23,7 +23,7 @@ namespace WB_postavki
         {
             InitializeComponent();
             mdiProp();
-
+            buttonPodsorti.PerformClick();
         }
 
         private void mdiProp()
@@ -113,7 +113,6 @@ namespace WB_postavki
             {
                 podsorti.Activate();
             }
-
         }
 
         private void FormPodsorti_FormClosed(object sender, FormClosedEventArgs e)

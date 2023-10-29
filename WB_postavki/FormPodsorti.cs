@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using OfficeOpenXml;
+using System.Net;
+using System.Drawing;
 using System.ComponentModel;
 using System.Data.OleDb;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace WB_postavki
 {
@@ -103,7 +106,7 @@ namespace WB_postavki
                             .ToList();
 
                         // Создание новой DataTable и заполнение ее данными из сгруппированных данных
-                        //System.Data.DataTable grT = new System.Data.DataTable();
+                        //System.Data.DataTable grT = new System.Data.DataTable()
                         grT.Columns.Add("Бренд");
                         grT.Columns.Add("Артикул продавца");
                         grT.Columns.Add("Артикул WB");
@@ -118,7 +121,19 @@ namespace WB_postavki
                             grT.Rows.Add(group.Brand, group.ArtSeller, group.ArtWB, group.Barcode, group.TotalCount, "");
 
                         }
+
+                        // Создание столбца изображений в DataGridView
+                        DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
+                        imgColumn.Name = "ImageColumn";
+                        imgColumn.HeaderText = "Изображения";
+                        // Вставляем столбец на первую позицию
+                        dataGridView1.Columns.Insert(0, imgColumn);
+
+                        dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+
                         dataGridView1.DataSource = grT;
+
+
                     }
                 }
             }
@@ -215,6 +230,81 @@ namespace WB_postavki
             public long Barcode { get; set; }
             public int TotalCount { get; set; }
             public int NewCount { get; set; }
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Проверка, что текущая ячейка принадлежит столбцу с изображением
+            if (dataGridView1.Columns[e.ColumnIndex] is DataGridViewImageColumn && e.Value != null)
+            {
+                // Получение URL из значения ячейки
+                string imageUrl = e.Value.ToString();
+
+                try
+                {
+                    // Загрузка изображения из URL
+                    WebClient wc = new WebClient();
+                    byte[] bytes = wc.DownloadData(imageUrl);
+                    Image img = Image.FromStream(new System.IO.MemoryStream(bytes));
+
+                    // Присваивание изображения ячейке
+                    e.Value = img;
+                }
+                catch (Exception ex)
+                {
+                    // Обработка ошибок
+                    Console.WriteLine($"Ошибка при загрузке изображения с URL: {imageUrl}. Подробности: {ex.Message}");
+                }
+            }
+        }
+
+        private void buttonImageAdd_Click(object sender, EventArgs e)
+        {
+            // Проверка, есть ли выбранная ячейка
+            if (dataGridView1.CurrentCell != null)
+            {
+                DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(dataGridView1.CurrentCell.ColumnIndex, dataGridView1.CurrentCell.RowIndex);
+                AddImageFromURL(args);
+            }
+        }
+
+
+        private void AddImageFromURL(DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                FormImageAdd formImageAdd = new FormImageAdd();
+                formImageAdd.Owner = this;
+                if (formImageAdd.ShowDialog() == DialogResult.OK)
+                {
+                    string ImageURL = formImageAdd.GetValue();
+                    cell.Value = ImageURL; // Установите значение ячейки как URL изображения
+                    // Загрузите изображение по URL и установите его как содержимое ячейки
+                    try
+                    {
+                        WebClient wc = new WebClient();
+                        byte[] bytes = wc.DownloadData(ImageURL);
+                        Image img = Image.FromStream(new System.IO.MemoryStream(bytes));
+                        cell.Value = img;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Обработка ошибок
+                        MessageBox.Show($"Ошибка при загрузке изображения с URL: {ImageURL}. Подробности: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Проверка, есть ли выбранная ячейка
+            if (dataGridView1.CurrentCell != null)
+            {
+                DataGridViewCellEventArgs args = new DataGridViewCellEventArgs(dataGridView1.CurrentCell.ColumnIndex, dataGridView1.CurrentCell.RowIndex);
+                AddImageFromURL(args);
+            }
         }
     }
 }

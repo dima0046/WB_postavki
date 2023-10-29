@@ -35,6 +35,7 @@
             dataGridView1 = new DataGridView();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
+            buttonImageAdd = new ReaLTaiizor.Controls.Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -94,7 +95,7 @@
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleCenter;
             button2.InactiveColor = Color.FromArgb(32, 34, 37);
-            button2.Location = new Point(104, 6);
+            button2.Location = new Point(155, 6);
             button2.Name = "button2";
             button2.PressedBorderColor = Color.FromArgb(165, 37, 37);
             button2.PressedColor = Color.FromArgb(165, 37, 37);
@@ -112,6 +113,8 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(800, 390);
             dataGridView1.TabIndex = 4;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
             // tableLayoutPanel1
             // 
@@ -131,6 +134,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(buttonImageAdd);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(btnOpen);
             panel1.Controls.Add(btnSave);
@@ -139,6 +143,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(794, 54);
             panel1.TabIndex = 5;
+            // 
+            // buttonImageAdd
+            // 
+            buttonImageAdd.BackColor = Color.Transparent;
+            buttonImageAdd.BackgroundImage = (Image)resources.GetObject("buttonImageAdd.BackgroundImage");
+            buttonImageAdd.BackgroundImageLayout = ImageLayout.None;
+            buttonImageAdd.BorderColor = Color.FromArgb(32, 34, 37);
+            buttonImageAdd.EnteredBorderColor = Color.FromArgb(165, 37, 37);
+            buttonImageAdd.EnteredColor = Color.FromArgb(32, 34, 37);
+            buttonImageAdd.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonImageAdd.Image = (Image)resources.GetObject("buttonImageAdd.Image");
+            buttonImageAdd.ImageAlign = ContentAlignment.MiddleCenter;
+            buttonImageAdd.InactiveColor = Color.FromArgb(32, 34, 37);
+            buttonImageAdd.Location = new Point(104, 6);
+            buttonImageAdd.Name = "buttonImageAdd";
+            buttonImageAdd.PressedBorderColor = Color.FromArgb(165, 37, 37);
+            buttonImageAdd.PressedColor = Color.FromArgb(165, 37, 37);
+            buttonImageAdd.Size = new Size(45, 45);
+            buttonImageAdd.TabIndex = 0;
+            buttonImageAdd.TextAlignment = StringAlignment.Center;
+            buttonImageAdd.Click += buttonImageAdd_Click;
             // 
             // FormPodsorti
             // 
@@ -167,5 +192,6 @@
         private DataGridView dataGridView1;
         private TableLayoutPanel tableLayoutPanel1;
         private Panel panel1;
+        private ReaLTaiizor.Controls.Button buttonImageAdd;
     }
 }

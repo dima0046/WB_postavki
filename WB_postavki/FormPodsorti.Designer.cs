@@ -34,11 +34,14 @@
             button2 = new ReaLTaiizor.Controls.Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
+            button1 = new Button();
             buttonImageAdd = new ReaLTaiizor.Controls.Button();
             dataGridView1 = new DataGridView();
+            pictureBox1 = new PictureBox();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // btnOpen
@@ -122,6 +125,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(buttonImageAdd);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(btnOpen);
@@ -131,6 +136,16 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(794, 54);
             panel1.TabIndex = 5;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(557, 17);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // buttonImageAdd
             // 
@@ -164,6 +179,14 @@
             dataGridView1.TabIndex = 6;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(663, 3);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 50);
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
+            // 
             // FormPodsorti
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -180,6 +203,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -192,5 +216,7 @@
         private Panel panel1;
         private ReaLTaiizor.Controls.Button buttonImageAdd;
         private DataGridView dataGridView1;
+        private Button button1;
+        private PictureBox pictureBox1;
     }
 }

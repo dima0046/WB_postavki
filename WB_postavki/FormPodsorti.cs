@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using OfficeOpenXml;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Drawing;
 using System.ComponentModel;
 using System.Data.OleDb;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml.Drawing;
 using System.IO.Packaging;
+using HtmlAgilityPack;
 
 namespace WB_postavki
 {
@@ -380,6 +382,22 @@ namespace WB_postavki
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var url = "https://www.wildberries.ru/catalog/78921851/detail.aspx";
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
 
+            var divNode = doc.DocumentNode.SelectSingleNode("/html/body/div[1]/main/div[2]/div/div[3]/div/div[3]/div[1]/div/div[2]/div/div[1]/div/div");
+            if (divNode != null)
+            {
+                var divContent = divNode.InnerHtml;
+                MessageBox.Show(divContent, "Содержимое div", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Не удалось найти элемент div на странице.");
+            }
+        }
     }
 }

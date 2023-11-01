@@ -34,14 +34,14 @@
             button2 = new ReaLTaiizor.Controls.Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             button1 = new Button();
             buttonImageAdd = new ReaLTaiizor.Controls.Button();
             dataGridView1 = new DataGridView();
-            pictureBox1 = new PictureBox();
             tableLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // btnOpen
@@ -137,6 +137,14 @@
             panel1.Size = new Size(794, 54);
             panel1.TabIndex = 5;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(663, 3);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 50);
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
+            // 
             // button1
             // 
             button1.Location = new Point(557, 17);
@@ -177,15 +185,9 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(794, 384);
             dataGridView1.TabIndex = 6;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(663, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(100, 50);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
             // FormPodsorti
             // 
@@ -202,8 +204,8 @@
             Load += FormPodsorti_Load;
             tableLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 

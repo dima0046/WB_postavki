@@ -162,7 +162,9 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(794, 384);
             dataGridView1.TabIndex = 6;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
             // FormPodsorti
             // 

@@ -8,6 +8,7 @@ using System.Data.OleDb;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml.Drawing;
 using System.IO.Packaging;
+using System.Diagnostics;
 
 namespace WB_postavki
 {
@@ -21,6 +22,8 @@ namespace WB_postavki
 
             // Или, если вы хотите использовать LicenseContext для EPPlus:
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            dataGridView1.CellContentClick += new DataGridViewCellEventHandler(dataGridView1_CellContentClick);
+            dataGridView1.CellFormatting += new DataGridViewCellFormattingEventHandler(dataGridView1_CellFormatting);
         }
 
         private void FormPodsorti_FormClosed(object sender, FormClosedEventArgs e)
@@ -40,7 +43,8 @@ namespace WB_postavki
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveExcel();
+            SaveToExcel(dataGridView1);
+            //SaveExcel();
         }
 
         private void loadFIleIntoDataSet()
@@ -114,13 +118,14 @@ namespace WB_postavki
                         grT.Columns.Add("Артикул WB");
                         grT.Columns.Add("Баркод");
                         grT.Columns.Add("Текущий остаток, шт.");
-                        grT.Columns.Add("Новое количество");
+                        grT.Columns.Add("Подсорт, шт.");
+                        grT.Columns.Add("Ссылка");
 
 
                         // Заполнение новой таблицы данными из сгруппированных данных
                         foreach (var group in grData)
                         {
-                            grT.Rows.Add(group.Brand, group.ArtSeller, group.ArtWB, group.Barcode, group.TotalCount, "");
+                            grT.Rows.Add(group.Brand, group.ArtSeller, group.ArtWB, group.Barcode, group.TotalCount, "", "Ссылка");
 
                         }
 
@@ -222,9 +227,9 @@ namespace WB_postavki
                                 if (grT.Columns[j].ColumnName != "Текущий остаток, шт." &&
                                     grT.Columns[j].ColumnName != "Новое количество")
                                 {
+
                                     // Получаем ячейку с изображением
-                                    DataGridViewImageCell cellpic =
-                                        dataGridView1.Rows[i].Cells[0] as DataGridViewImageCell;
+                                    DataGridViewImageCell cellpic = dataGridView1.Rows[i].Cells[0] as DataGridViewImageCell;
                                     // Получаем изображение из ячейки
                                     if (cellpic.Value != null && cellpic.Value is System.Drawing.Image)
                                     {
@@ -256,11 +261,23 @@ namespace WB_postavki
                                                 ws.Drawings.Remove("pic" + i.ToString());
                                             }
 
+
+                                            /*
+                                            // Вставляем пустую колонку перед вставкой изображения
+                                            ws.InsertColumn(1, 1); // Вставляем новый столбец перед первым столбцом
+                                            ws.Column(1).Width = 10; // Устанавливаем ширину нового столбца
+                                            for (int r = 1; r <= grT.Rows.Count; r++)
+                                            {
+                                                // Устанавливаем высоту для каждой строки
+                                                ws.Row(r).Height = 10;
+                                            }
+                                            */
+
+
                                             // Добавляем изображение в Excel
-                                            ExcelPicture picture =
-                                                ws.Drawings.AddPicture("pic" + i.ToString(), fileInfo);
+                                            ExcelPicture picture = ws.Drawings.AddPicture("pic" + i.ToString(), fileInfo);
                                             // Устанавливаем позицию изображения в Excel
-                                            picture.SetPosition(excelRow, 0, 0, 0);
+                                            picture.SetPosition(excelRow, 2, 0, 0); // Второй аргумент - это столбец, в котором вы хотите вставить изображение
                                             // Устанавливаем размер изображения в Excel
                                             picture.SetSize(100, 100);
 
@@ -312,6 +329,77 @@ namespace WB_postavki
                 }
             }
         }
+
+
+
+        private void SaveToExcel(DataGridView dataGridView)
+        {
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Новый лист");
+
+                // Добавляем наименования столбцов, пропуская столбец "Текущий остаток, шт."
+                int columnIndex = 1;
+                int[] columnWidths = new int[] { 16, 30, 30, 13, 14, 17 }; // Пример ширин для каждого столбца
+
+                for (int i = 0; i < dataGridView.Columns.Count; i++)
+                {
+                    if (dataGridView.Columns[i].HeaderText != "Текущий остаток, шт." && dataGridView.Columns[i].HeaderText != "Ссылка")
+                    {
+                        worksheet.Cells[1, columnIndex].Value = dataGridView.Columns[i].HeaderText;
+                        worksheet.Column(columnIndex).Width = columnWidths[columnIndex - 1]; // Устанавливаем ширину столбца
+                        columnIndex++;
+                    }
+                }
+
+                string imagesFolderPath = "Images"; // Папка для изображений
+                Directory.CreateDirectory(imagesFolderPath); // Создаем папку, если она не существует
+
+                // Добавляем данные, пропуская столбец "Текущий остаток, шт."
+                for (int i = 0; i < dataGridView.Rows.Count - 1; i++)
+                {
+                    int cellIndex = 1;
+                    for (int j = 0; j < dataGridView.Columns.Count; j++)
+                    {
+                        if (dataGridView.Columns[j].HeaderText != "Текущий остаток, шт." && dataGridView.Columns[j].HeaderText != "Ссылка")
+                        {
+                            if (dataGridView.Columns[j].HeaderText == "Изображения") // Проверяем столбец с изображениями
+                            {
+                                if (dataGridView.Rows[i].Cells[j].Value is Image image)
+                                {
+                                    string imagePath = Path.Combine(imagesFolderPath, $"pic_{i}.png");
+                                    image.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+                                    worksheet.Cells[i + 2, cellIndex].Value = imagePath; // Сохраняем путь к изображению
+                                }
+                            }
+                            else
+                            {
+                                worksheet.Cells[i + 2, cellIndex].Value = dataGridView.Rows[i].Cells[j].Value.ToString();
+                            }
+                            cellIndex++;
+                        }
+                    }
+                }
+
+                // Сохраняем файл
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                    saveFileDialog.FilterIndex = 1;
+                    saveFileDialog.RestoreDirectory = true;
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        FileInfo excelFile = new FileInfo(saveFileDialog.FileName);
+                        package.SaveAs(excelFile);
+                    }
+                }
+            }
+        }
+
+
+
+
 
 
 
@@ -380,6 +468,44 @@ namespace WB_postavki
             }
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["Ссылка"].Index)
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["Ссылка"].Index)
+                {
+                    string value = dataGridView1.Rows[e.RowIndex].Cells["Ссылка"].Value.ToString();
+                    if (value.ToLower() == "ссылка")
+                    {
+                        string artWBValue = dataGridView1.Rows[e.RowIndex].Cells["Артикул WB"].Value.ToString();
+                        string url = "https://www.wildberries.ru/catalog/" + artWBValue + "/detail.aspx";
+                        try
+                        {
+                            System.Diagnostics.Process.Start(new ProcessStartInfo
+                            {
+                                FileName = url,
+                                UseShellExecute = true
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Ошибка при открытии браузера: " + ex.Message);
+                        }
+                    }
+                }
+            }
+        }
 
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "Ссылка")
+            {
+                if (e.Value != null)
+                {
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.ForeColor = System.Drawing.Color.Blue;
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.Font = new System.Drawing.Font(dataGridView1.Font, FontStyle.Underline);
+                }
+            }
+        }
     }
 }
